@@ -1,0 +1,340 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="Debra L.">
+	<title>Exercise3</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet" >
+	<link href="css/grid.css" rel="stylesheet">
+	<link href="css/bootstrap-grid.css" rel="stylesheet">
+	<script src="js/bootstrap.bundle.min.js"></script>
+	
+	<!----  
+    One visual sketch of the planned application (using the tool of your choice)
+    3-5 separate functions that are used as part of the application (100 lines of JS code minimum + whatever HTML and CSS are needed). These functions can be separate global functions in the code or unique methods that you create as part of the class constructor.
+    Manipulation of the DOM using JavaScript methods to create new elements on the page: e.g. "createElement", "appendChild", etc.
+		- 
+    Manipulation of the DOM using JavaScript methods to manipulate or create new styles on the page e.g "variable.style" "variable.className", etc.
+		- hiding and showing results 
+    The use of at least one class, and two built-in JavaScript methods (Date, .toUpperCase, .split, etc.)
+		- how can I rework this to be a class with methods? search class? gets type of search from radio button and input from input or button then processes? 
+		-
+    The use of at least one control structure.
+		- if/else 
+
+	All scripts must return a value of some kind, and that value must be declared either as an alert on the page, text on the page, or in the console ---> 
+	
+	<!---https://www.w3schools.com/howto/howto_js_filter_table.asp ---> 
+	
+	<style> 
+		#myTable {
+			border: 1px solid #ddd;
+		}
+		
+		#myTable th, #myTable td {
+			padding: 12px;
+		}
+		
+		#myTable tr {
+			border-bottom: 1px solid #ddd;
+		}
+		
+		#myTable tr.header, #myTable tr:hover {
+			background-color: #f1f1f1;
+		}
+		
+		.mainHeader {
+		text-align: center;
+		padding: 50px;
+		background-color: #eaeaea ;
+		margin: 5px;
+		
+		}
+		
+		.btn-primary {
+			background-color: #BA0C2F;
+			width: 100%;
+			height: 100%;
+			border: #4a0513 ;
+			border-radius: 0;
+		}
+		
+		.btn-secondary {
+			width: 100%;
+			height: 100%;
+			border: #4a0513 ;
+			border-radius: 0;
+			}
+		
+		#smallerText {
+			font-weight: lighter;
+		}
+
+	</style>
+	
+	
+	<script> 
+		
+	/////SEARCHING CONSTRUCTOR?//////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		///search by article name 
+		function myFunction() {
+			//Declare Variables 
+			let input, filter, table, tr, td, i, txtValue, resultCt; 
+			input = document.getElementById("myInput"); 
+			filter = input.value.toUpperCase();
+			table = document.getElementById("myTable");
+			tr = table.getElementsByTagName("tr");
+			resultCt = 0; 
+			
+			//Loop through all table rows and hide those who don't match the search query 
+			
+			for (i=0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+				if (td) {
+					txtValue = td.TextContent || td.innerText; 
+					//https://www.w3schools.com/jsref/jsref_indexof.asp 
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+						resultCt++;
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+			console.log("You have " + resultCt + " results in your search.");
+			document.getElementById("results").innerText = "Your search has " + resultCt + " results.";
+		}
+		
+		//search in keywords 
+		function myKeywordSearch() {
+			//Declare Variables 
+			let kinput, kfilter, ktable, ktr, ktd, ki, ktxtValue, kresultCt; 
+			kinput = document.getElementById("myKeyword"); 
+			kfilter = kinput.value.toUpperCase();
+			ktable = document.getElementById("myTable");
+			ktr = ktable.getElementsByTagName("tr"); 
+			kresultCt = 0;
+			
+			//Loop through all table rows and hide those who don't match the search query 
+			
+			for (ki=0; ki < ktr.length; ki++) {
+				ktd = ktr[ki].getElementsByTagName("td")[4];
+				if (ktd) {
+					ktxtValue = ktd.TextContent || ktd.innerText; 
+					if (ktxtValue.toUpperCase().indexOf(kfilter) > -1) {
+						ktr[ki].style.display = "";
+						kresultCt++;
+					} else {
+						ktr[ki].style.display = "none";
+					}
+				}
+			}
+			console.log("You have " + kresultCt + " results in your search.");
+			document.getElementById("results").innerText = "Your search has " + kresultCt + " results.";
+		}
+		
+		function resetSearch() {
+			let rtable, rtr, rtd, ri; 
+			rtable = document.getElementById("myTable"); 
+			rtr = rtable.getElementsByTagName("tr");
+			
+			for (ri=0; ri < rtr.length; ri++) {
+				rtr[ri].style.display = "";
+			}
+			
+			document.getElementById("results").innerText = "";
+			document.getElementById("myInput").value = "";
+			document.getElementById("myKeyword").value = "";
+		}
+	
+		
+		//Facility search for clickable buttons 
+		function facilitySearch(finput) {
+			let ffilter, ftable, ftr, ftd, fi, ftxtValue, fresultCt;
+			//finput = "aif";
+			ffilter = finput.toUpperCase(); 
+			ftable = document.getElementById("myTable"); 
+			ftr = ftable.getElementsByTagName("tr"); 
+			console.log("Your facility search word is: " + finput);
+			console.log("Your facility search word in upper case is: " + ffilter);
+			fresultCt = 0; 
+			
+			for (fi=1; fi < ftr.length; fi++) {
+				ftd = ftr[fi].getElementsByTagName("td")[3];
+				if (ftd) {
+					ftxtValue = ftd.textContent || ftd.innerText; 
+					if (ftxtValue.toUpperCase().indexOf(ffilter) > -1) {
+						ftr[fi].style.display = "";
+						fresultCt++;
+					} else {
+						ftr[fi].style.display = "none";
+					}
+				}
+			}
+			console.log("You have " + fresultCt + " results in your search.");
+			document.getElementById("results").innerText = "Your search has " + fresultCt + " results.";
+		}
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	 //convert DOI column into clickable links - https://doi.org/ 	
+	function convertDoiLinks() {
+		let doi, table3, tr3, doiCell; 
+		table3 = document.getElementById("myTable"); 
+		tr3 = table3.getElementsByTagName("tr"); 
+
+		//starts at 1 because first row only contains header items
+		for (i3 = 1; i3 < tr3.length; i3++) {
+			console.log("row# " + i3);
+			doiCell = tr3[i3].getElementsByTagName("td")[2];
+			doi = doiCell.textContent || doiCell.innerText;
+			console.log("This is the doi: " + doi);
+			doiCell.innerHTML = '<a href=https://doi.org/' + doi + '>' + doi + "</a>" ;		}
+		}
+
+	</script>
+	
+</head>
+
+<body>
+ <!---- Type of Search ---> 
+ <!---- Text input or buttons ----> 
+ <!--- Submit button ----> 
+ <!---- Table of info ---> 
+
+	<div class="container"> 
+	<div class="row">&nbsp;</div>
+	<div class="row">
+		<div class="col-12 display-1 mainHeader"> <h1> <span id="smallerText">Published Research Utilizing the</span> <br> The Ohio State University Oklo Nuclear Reactor Laboratory </h1></div></div>
+	<div class="row">&nbsp;</div>
+	<div class="row">
+		<div class="col-10">&nbsp;</div>
+		<div class="col-2"> <button type="button" class="btn btn-primary" onClick="convertDoiLinks()">Convert Links</button></div>
+	</div>
+	<div class="row">&nbsp;</div>
+	<div class="row">
+		<input type="text" id="myInput" onKeyUp="myFunction()" placeholder="Search by article title..."> 
+	</div>
+	<div class="row"> 
+		<input type="text" id="myKeyword" onKeyUp="myKeywordSearch()" placeholder="Search by keyword..."> 
+	</div>
+	<div class="row">&nbsp;</div>	
+	<div class="row">
+		<div class="col-1">
+		<button type="button" class="btn btn-secondary" onClick="facilitySearch('aif')" id="aifFilter">AIF</button>
+		</div>
+		<div class="col-1">
+		<button type="button" class="btn btn-secondary" onClick="facilitySearch('cif')" id="cifFilter">CIF</button>
+		</div>
+		<div class="col-1">
+		<button type="button" class="btn btn-secondary" onClick="facilitySearch('rabbit')" id="rabbitFilter">Rabbit</button>
+		</div>
+		<div class="col-1">
+		<button type="button" class="btn btn-secondary" onClick="facilitySearch('beam port 1')" id="bp1Filter">Beam Port 1</button>
+		</div>
+		<div class="col-1">
+		<button type="button" class="btn btn-secondary" onClick="facilitySearch('beam port 2')" id="bp2Filter">Beam Port 2</button>
+		</div>
+		<div class="col-1">
+		<button type="button" class="btn btn-secondary" onClick="facilitySearch('ndp')" id="ndpFilter">NDP</button>
+		</div>
+		<div class="col-1">
+		<button type="button" class="btn btn-secondary" onClick="facilitySearch('Dry Tube')" id="dryTubeFilter">Dry Tube</button>
+		</div>
+		<div class="col-1">
+		<button type="button" class="btn btn-secondary" onClick="facilitySearch('co-60')" id="co60Filter">Co-60</button>
+		</div>
+		<div class="col-3">&nbsp;</div>
+		<div class="col-1"> 
+		<button type="button" class="btn btn-secondary" onClick="resetSearch()" id="resetBtn"> Reset Search</button>
+		</div>
+	</div>
+	<div class="row">&nbsp;</div>
+	<div class="row">&nbsp;</div>
+	<div class="row">
+		<p id="results">&nbsp;  </p>
+	<table id="myTable">
+		<tr class="header"> 
+			<th>Article</th>
+			<th>Year</th>
+			<th>DOI</th>
+			<th>Facility</th>
+			<th data>Keywords</th>		
+		</tr>
+		<tr><td>Neutron Irradiation and PIE of ZrC Coated Surrogate Particle Fuel in the IN-Pile Steady-state Extreme Temperature &#40;INSET&#41; Testbed &#40;&#35;4603&#41;</td><td>2026</td><td>10.2172/3452237</td><td>Dry Tube Facility</td><td>Neutron irradiation&#59;   ZrC coated surrogate particle fuel&#59;   Post&#45;irradiation examination &#40;PIE&#41;&#59;   INSET testbed&#59;   Advanced reactor fuels</td></tr>
+		<tr><td>Review of self-powered neutron detectors for reactor instrumentation</td><td>2025</td><td>10.2172/3374079</td><td>Gamma Facility</td><td>Self&#45;powered neutron detectors&#59;   Temperature effects&#59;   Gamma field&#59;   Neutron detection&#59;   Reactor instrumentation</td></tr>
+		<tr><td>Analysis of data from irradiation testing of printed strain gauges in prototypic nuclear environments</td><td>2025</td><td>10.2172/3019572</td><td>Rabbit</td><td>Printed strain gauges&#59;   Irradiation testing&#59;   Nuclear instrumentation&#59;   Radiation effects on sensors&#59;   Prototypic nuclear environments</td></tr>
+		<tr><td>Qualification of miniature fission chambers at high temperature in OSU Research Reactor</td><td>2025</td><td>10.1051/epjconf/202533804018</td><td>Reactor Casing</td><td>Miniature Fission Chambers&#59; Fission Chambers&#59; High&#45;Temperature Instrumentation&#59; Detector Qualification&#59; Neutron Flux Monitoring</td></tr>
+		<tr><td>Irradiation Results of  Commercial Neutron and  Gamma Sensors at the Ohio  State University Research  Reactor </td><td>2024</td><td>10.2172/2439197·</td><td>Dry Tube Facility</td><td>Neutron sensors&#59;  Gamma&#45;ray sensors&#59;  Radiation effects testing&#59;  Sensor irradiation&#59;  Radiation tolerance</td></tr>
+		<tr><td>Gamma-ray Spectroscopy in Low-Power Nuclear Research Reactors</td><td>2024</td><td>10.3390/jne5010003</td><td>Beam Port 1</td><td>Gamma&#45;ray spectroscopy&#59;  Fission products&#59;  High&#45;purity germanium detectors&#59;  CeBr<sub>3</sub> detectors&#59;  Stilbene scintillators</td></tr>
+		<tr><td>Testing of an organic metal halide perovskite for fast neutron detection</td><td>2024</td><td>10.1016/j.nima.2024.169340</td><td>Beam Port 1</td><td>Organic metal halide perovskite&#59;  Fast neutron detection&#59;  Perovskite detectors&#59;  Gamma discrimination&#59;  Neutron detectors</td></tr>
+		<tr><td>Response of Silicon Solar Cells to Neutrons in Post-Detonation Monitoring</td><td>2024</td><td>10.1016/j.nima.2024.169217</td><td>Beam Port 1</td><td>Silicon Solar Cells Neutron Detection&#59; Post&#45;Detonation Monitoring&#59; Fast Neutron Response&#59; Nuclear Detonation Detection&#59; Photovoltaic Radiation Sensors</td></tr>
+		<tr><td>Review of research and capabilities of 500 kW research reactor at the Ohio State University</td><td>2024</td><td>10.1016/j.anucene.2024.110647</td><td>Full Facility </td><td>Research reactor&#59;  Neutron imaging&#59;  Neutron depth profiling&#59;  In&#45;pile instrumentation&#59;  Irradiation testing</td></tr>
+		<tr><td>Nuclear reactor radiation and temperature effects on piezoelectric surface acoustic wave devices</td><td>2024</td><td>10.1016/j.nimb.2024.165446</td><td>Beam Port 2</td><td>Surface Acoustic Wave &#40;SAW&#41; Devices&#59; Piezoelectric Sensors&#59; In&#45;Pile Irradiation&#59; Radiation Damage&#59; Reactor Sensors</td></tr>
+		<tr><td>Mechanically Robust and Flexible Scintillation Thin Films for Neutron Radiography and Multiplicity Counting</td><td>2024</td><td>10.1117/12.3021930</td><td>Beam Port 2</td><td></td></tr>
+		<tr><td>Response function for optical fiber based gamma thermometer in data analytic methodology for OFBGT array</td><td>2023</td><td>10.1016/j.pnucene.2023.104893</td><td>CIF</td><td>Optical Fiber Based Gamma Thermometer &#40;OFBGT&#41;&#59; Gamma Thermometer&#59; Response Function&#59; OFBGT Array&#59; Power Distribution</td></tr>
+		<tr><td>Feasibility and challenges of 22Na based radioactive tracer dilution for mass measurement of molten salts</td><td>2023</td><td>10.1007/s10967-022-08339-5</td><td>CIF </td><td>Molten salts&#59;  Radioactive tracer dilution&#59;  Sodium&#45;22 &#40;²²Na&#41;&#59;  Mass measurement&#59;  Radiotracers</td></tr>
+		<tr><td>Testing of fiber optic based sensors for advanced reactors in the Texas A&M University TRIGA reactor</td><td>2023</td><td>10.2139/ssrn.4510868</td><td>CIF </td><td>Optical Fiber Sensors&#59; Gamma Thermometer&#59; Advanced Reactors&#59; Reactor Instrumentation&#59; Sensor Testing</td></tr>
+		<tr><td>Characterizing a Research Reactor Based Fast Neutron Beam with Organic Scintillators</td><td>2023</td><td>10.1109/NSSMICRTSD49126.2023.10338751</td><td>Beam Port 1</td><td>Fast neutron beams&#59;  Research reactors&#59;  Organic scintillators&#59;  Fast neutron detection&#59;  Neutron beam characterization</td></tr>
+		<tr><td>Improved image stitching method for neutron imaging of large objects with small beam size</td><td>2023</td><td>10.1117/12.2677150</td><td>Beam Port 1, Beam Port 2</td><td>Image Stitching&#59; Neutron Imaging&#59; Neutron Radiography&#59; Computed Tomography &#40;CT&#41;&#59; Large Object Imaging</td></tr>
+		<tr><td>Development, feasibility, and uncertainty of radioactive .sup.22Na tracer dilution and gamma spectroscopy for mass determination of molten salt for pyroprocessing spent nuclear fuels.</td><td>2023</td><td>10.1007/s10967-023-08790-y</td><td>Full Facility</td><td></td></tr>
+		<tr><td>Neutron irradiation effects on gallium nitride-based blue LEDs</td><td>2022</td><td>10.1016/j.nimb.2022.03.011</td><td>CIF, Rabbit</td><td>Gallium nitride &#40;GaN&#41;&#59;  Blue light&#45;emitting diodes &#40;LEDs&#41;&#59;  Neutron irradiation&#59;  Radiation effects on semiconductors&#59;  Light emission intensity</td></tr>
+		<tr><td>Silicon Solar Cells for Post-Detonation Monitoring and Gamma-Radiation Effects</td><td>2022</td><td>10.1080/00295639.2022.2091905</td><td>Co-60, Cs-137</td><td></td></tr>
+		<tr><td>Silicon Solar Cells for Post-Detonation Monitoring and Gamma-Radiation Effects</td><td>2022</td><td>10.1080/00295639.2022.2091905</td><td>Cs-137, Co-60</td><td>Silicon solar cells&#59;  Post&#45;detonation monitoring&#59;  Gamma&#45;radiation effects&#59;  Radiation effects on semiconductors&#59;  Radiation tolerance</td></tr>
+		<tr><td>An automated fast neutron computed tomography instrument with on-line focusing for non-destructive evaluation</td><td>2022</td><td>10.1063/5.0091032</td><td>Beam Port 1</td><td>Fast Neutron Computed Tomography&#59; Fast Neutron Imaging&#59; Nondestructive Evaluation &#40;NDE&#41;&#59; Neutron Radiography&#59; Automated Imaging Systems</td></tr>
+		<tr><td>Quantifying spatial resolution in a fast neutron radiography system</td><td>2022</td><td>10.1016/j.nima.2022.166331</td><td>Beam Port 1</td><td>Fast neutron radiography&#59;  Fast neutron imaging&#59;  Spatial resolution&#59;  Modulation transfer function &#40;MTF&#41;&#59;  PVT scintillators</td></tr>
+		<tr><td>Lithium Chloride-Substituted Methylammonium Lead Tribromide Perovskites for Dual γ&#47Neutron Sensing</td><td>2022</td><td>10.1021/acsami.2c05024</td><td>Beam Port 2</td><td>Organic metal halide perovskites&#59;  Lithium&#45;doped perovskites&#59;  Dual gamma&#45;neutron sensing&#59;  Neutron detection&#59;  Gamma&#45;ray detection</td></tr>
+		<tr><td>Analytical Thermal Analysis of an Optical Fiber-Based Gamma-Ray Calorimeter With Non-Constant Fluid Temperatures on its Boundary</td><td>2022</td><td>10.1109/JSEN.2022.3154646</td><td>WIF</td><td>Gamma&#45;Ray Calorimeter&#59; Optical Fiber Sensor&#59; Fiber&#45;Optic Thermometry&#59; Analytical Thermal Model&#59; Reactor Instrumentation</td></tr>
+		<tr><td>Comparison of Measurements and MCNP Calculations for Response of an Optical Fiber-Based Gamma Thermometer in the Ohio State University Research Reactor</td><td>2022</td><td>10.13182/ICRSRPSD22-39419</td><td>WIF</td><td> Optical Fiber‑Based Gamma Thermometer &#40;OFBGT&#41;&#59;  MCNP Simulation&#59;  Linear Power Density&#59;  Axial Power Inference&#59;  Power Distribution Estimation</td></tr>
+		<tr><td>Steady-State In-Pile Nuclear Thermal Propulsion Experimental Testbed Initial Demonstration at The Ohio State University Research Reactor</td><td>2022</td><td>10.1080/00295450.2021.1879582</td><td>Full Facility</td><td>Nuclear thermal propulsion&#59;  In&#45;pile testing&#59;  Steady&#45;state operation&#59;  Subscale experiments&#59;  High&#45;temperature testing</td></tr>
+		<tr><td>Parametric Analysis of an Optical Fiber-Based Gamma Thermometer for University Research Reactors Using an Analytic Thermal Model</td><td>2021</td><td>10.1080/00295450.2020.1844532</td><td>CIF</td><td>Gamma Thermometer&#59;  Optical Fiber Sensor&#59;  Parametric Analysis&#59;  Thermal Modeling&#59;  Research Reactor Instrumentation</td></tr>
+		<tr><td>Neutron irradiation of alloy N and 316L stainless steel in contact with a molten chloride salt</td><td>2021</td><td>10.1016/j.net.2020.07.042</td><td>Dry Tube Facility</td><td>Molten Salt Reactor &#40;MSR&#41;&#59; Molten Chloride Salt&#59; Neutron Irradiation&#59; Hastelloy N&#59; Corrosion</td></tr>
+		<tr><td>Fast neutron computed tomography of multi-material complex objects</td><td>2021</td><td>10.1117/12.2595862</td><td>Beam Port 1</td><td>Fast neutron computed tomography&#59;  Fast neutron imaging&#59;  Neutron computed tomography&#59;  Multi&#45;material imaging&#59;  PVT scintillators</td></tr>
+		<tr><td>Analytic Thermal Model of an Optical Fiber Based Gamma Thermometer and its Application in a University Research Reactor</td><td>2020</td><td>10.1109/JSEN.2020.2978424</td><td>CIF</td><td>Gamma Thermometer&#59; Optical Fiber Sensor&#59; Fiber&#45;Optic Thermometry&#59; Thermal Modeling&#59; Gamma&#45;Ray Detector</td></tr>
+		<tr><td>Comparative Evaluation of Three Wireless Sensor Network Transceivers in a High Radiation Environment</td><td>2020</td><td>10.1051/epjconf/202022508007</td><td>Co-60 </td><td>Wireless sensor networks&#59;  Radiation&#45;hardened transceivers&#59;  Nuclear power plants&#59;  Total dose testing&#59;  High radiation environments</td></tr>
+		<tr><td>Characterization of a reactor-based fast neutron beam facility for fast neutron imaging</td><td>2020</td><td>10.1117/12.2569964</td><td>Beam Port 1</td><td>Fast neutron imaging&#59;  Fast neutron beams&#59;  Neutron radiography&#59;  Research reactors&#59;  Neutron beam characterization</td></tr>
+		<tr><td>Evaluation of Ionizing Radiation Effects on Device Modules Used in Wireless-Based Monitoring Systems</td><td>2020</td><td>10.1007/s10836-020-05890-5</td><td>Gamma Facility</td><td>Ionizing radiation effects&#59;  Radiation&#45;hardened electronics&#59;  Total dose testing&#59;  Wireless monitoring systems&#59;  Commercial off&#45;the&#45;shelf &#40;COTS&#41; devices</td></tr>
+		<tr><td>Silicon carbide detectors for high flux neutron monitoring at near-core locations</td><td>2020</td><td>10.1016/j.nima.2019.163110</td><td>Thermal Column</td><td>Silicon carbide detectors&#59;  High&#45;flux neutron monitoring&#59;  Neutron detectors&#59;  Research reactors&#59;  Near&#45;core instrumentation</td></tr>
+		<tr><td>Performance of 5- m PIN diamond diodes as thermal neutron detectors</td><td>2020</td><td>10.1016/j.nima.2020.163601</td><td>Beam Port 2</td><td>Diamond detectors&#59;  PIN diamond diodes&#59;  Thermal neutron detection&#59;  Radiation&#45;hard detectors&#59;  Neutron detectors</td></tr>
+		<tr><td>Radiation Deduced Refractive Index Profile Changes of Type I and Type II Gratings When Subjected to Ionizing Radiation </td><td>2019</td><td>10.1109/JSEN.2019.2904013</td><td>Gamma and Neutron Facilities</td><td>Fiber Bragg Gratings &#40;FBG&#41;&#59; Optical Fiber Sensors&#59; Ionizing Radiation&#59; Refractive Index Profile&#59; Gamma Irradiation</td></tr>
+		<tr><td>Evaluation of polyvinyl toluene scintillators for fast neutron imaging</td><td>2018</td><td>10.1007/s10967-018-6080-1</td><td>Beam Port 2</td><td>Polyvinyl toluene scintillators&#59;  Fast neutron imaging&#59;  Fast neutron detection&#59;  Scintillation detectors&#59;  Neutron imaging systems</td></tr>
+		<tr><td>Fast neutron detection at near-core location of a research reactor with a SiC detector</td><td>2018</td><td>10.1016/j.nima.2018.01.070</td><td>Co-60 </td><td>Silicon carbide detectors&#59;  Fast neutron detection&#59;  Near&#45;core irradiation&#59;  High&#45;temperature radiation monitoring&#59;  Semiconductor neutron detectors</td></tr>
+		<tr><td>Organohalide Lead Perovskites&#58; More Stable than Glass under Gamma-Ray Radiation</td><td>2018</td><td>10.1002/adma.201805547</td><td>Cs-137</td><td>Organohalide perovskites&#59;  Gamma&#45;ray radiation effects&#59;  Radiation stability&#59;  Self&#45;healing materials&#59;  Perovskite semiconductors</td></tr>
+		<tr><td>Large Format Li Co‐Doped Nai:Tl &#40;Nail&#8482;&#41; Scintillation Detector for Gamma‐Ray and Neutron Dual Detection</td><td>2018</td><td> 10.1002/9781119494096.ch20</td><td>Beam Port 2</td><td>Li co&#45;doped NaI:Tl &#40;NaIL&#41;&#59;  Scintillation detectors&#59;  Gamma&#45;ray detection&#59;  Neutron detection&#59;  Dual&#45;mode radiation detection</td></tr>
+		<tr><td>Optical signatures of deep level defects in Ga<sub>2</sub>O<sub>3</sub></td><td>2018</td><td>10.1063/1.5026770</td><td>Full Facility</td><td>Ga<sub>2</sub>O<sub>3</sub>&#59;  deep level defects&#59;  cathodoluminescence&#59;  point defects&#59;  neutron irradiation</td></tr>
+		<tr><td>Ex-situ and in-situ observations of the effects of gamma radiation on lithium ion battery performance</td><td>2017</td><td> 10.1016/j.jpowsour.2017.04.098</td><td>Co-60 </td><td>Lithium&#45;ion batteries&#59;  Gamma radiation effects&#59;  Radiation&#45;induced degradation&#59;  In situ battery testing&#59;  Battery performance</td></tr>
+		<tr><td>The Creation of a High Temperature Irradiation Facility in the Ohio State Research Reactor</td><td>2017</td><td>10.2172/2439197</td><td>Full Facility </td><td>High temperature irradiation facility&#59;   Ohio State University Research Reactor&#59;   Irradiation testing&#59;   Research reactor facility&#59;   Nuclear engineering</td></tr>
+		<tr><td>Demonstrating the Feasibility of Al as Anode Current Collector in Li Ion Batteries via In Situ Neutron Depth Profiling</td><td>2015</td><td>10.1021/acs.chemmater.5b04039</td><td>Beam Port 2</td><td>Lithium&#45;ion batteries&#59;  Neutron depth profiling&#59;  Aluminum current collectors&#59;  In situ characterization&#59;  Lithium transport</td></tr>
+		<tr><td>In-Situ Reactor Radiation-Induced Attenuation in Sapphire Optical Fibers</td><td>2014</td><td>10.1111/jace.13211</td><td>Dry Tube Facility</td><td>Sapphire optical fibers&#59;  Radiation&#45;induced attenuation&#59;  Gamma irradiation&#59;  Optical fiber sensors&#59;  Radiation effects</td></tr>
+		<tr><td>In Situ Characterization of Li Transport in LiSn Anodes with Neutrons</td><td>2014</td><td>10.1149/MA2014-02/1/2</td><td>NDP</td><td>Lithium&#45;ion batteries&#59;  LiSn anodes&#59;  Lithium transport&#59;  Neutron depth profiling&#59;  In situ characterization</td></tr>
+		<tr><td>In Situ Quantification and Visualization of Lithium Transport with Neutrons</td><td>2014</td><td>10.1002/anie.201404197</td><td>NDP</td><td>Lithium&#45;ion batteries&#59;  Neutron depth profiling&#59;  Lithium transport&#59;  In situ characterization&#59;  Electrochemistry</td></tr>
+		<tr><td>Neutron conversion efficiency and gamma interference with gadolinium</td><td>2014</td><td>10.1007/s10967-014-3083-4</td><td>Beam Port 2</td><td>Gadolinium&#59;  Neutron conversion efficiency&#59;  Gamma interference&#59;  Thermal neutron detection&#59;  Neutron capture</td></tr>
+		<tr><td>Fabrication and characterization of an irradiation facility for large-sample geometry</td><td>2013</td><td>10.1007/s10967-012-2073-7</td><td>Beam Port 1, Beam Port 2</td><td>Neutron activation analysis&#59;  Irradiation facilities&#59;  Large&#45;sample irradiation&#59;  Neutron flux characterization&#59;  Neutron energy spectrum</td></tr>
+		<tr><td>The Potential of Using Li-Ion Batteries for Radiation Detection</td><td>2013</td><td>10.1109/TNS.2012.2231097</td><td>Neutron Beam</td><td>Lithium&#45;ion batteries&#59;  Radiation detection&#59;  Neutron sensors&#59;  Gamma&#45;ray detection&#59;  Battery&#45;based sensors</td></tr>
+		<tr><td>Evaluation of Freestanding GaN as an Alpha and Neutron Detector</td><td>2013</td><td>10.1016/j.nima.2013.04.019</td><td>Neutron Beam</td><td>Gallium Nitride Detectors&#59; Neutron Detection&#59; Alpha Particle Detection&#59; Semiconductor Radiation Detectors&#59; Wide Bandgap Semiconductors</td></tr>
+		<tr><td>Measurement of internal conversion electrons from Gd neutron capture</td><td>2013</td><td>10.1016/j.nima.2012.12.077</td><td>Beam Port 2</td><td>Gadolinium neutron absorption&#59;  Internal conversion electrons&#59;  Thermal neutron detection&#59;  Gamma&#45;ray rejection&#59;  Semiconductor detectors</td></tr>
+		<tr><td>Effects of annealing on irradiated sic piezoresistive pressure sensor</td><td>2012</td><td>10.3938/jkps.61.1005</td><td>AIF</td><td>Silicon Carbide &#40;SiC&#41;&#59;  Piezoresistive Pressure Sensor&#59;  Neutron Irradiation&#59;  Post&#45;Irradiation Annealing&#59;  Radiation Effects</td></tr>
+		<tr><td>Characterization of a new external neutron beam facility at the Ohio State University</td><td>2012</td><td>10.1007/s10967-011-1289-2</td><td>Beam port 2</td><td>Neutron beam characterization&#59;  Neutron radiography&#59;  Neutron depth profiling&#59;  Thermal neutron beams&#59;  Tomography</td></tr>
+		<tr><td>Carrier-Removal Comparison &#40;n/p&#41; and Functional Testing of Si and SiC Power Diodes</td><td>2010</td><td>10.1109/TNS.2010.2056931</td><td>CIF, Rabbit</td><td>Silicon carbide Schottky diodes&#59;  Neutron irradiation&#59;  Proton irradiation&#59;  Non&#45;ionizing energy loss &#40;NIEL&#41;&#59;  Radiation effects on semiconductors</td></tr>
+		<tr><td>Neutron and Proton Radiation Damage and Isothermal Annealing of Irradiated SiC Schottky Power Diodes</td><td>2009</td><td>10.1063/1.3115555</td><td>CIF, Rabbit</td><td>Silicon carbide Schottky diodes&#59;  Neutron radiation damage&#59;  Proton radiation damage&#59;  Isothermal annealing&#59;  Radiation effects on semiconductors</td></tr>
+		<tr><td>Neutron spectral measurement of the Ohio state research reactor pneumatic tube</td><td>2009</td><td>10.1007/s10967-009-0281-6</td><td>Rabbit</td><td>Neutron Spectral Measurement&#59; Pneumatic Tube&#59; Rabbit Tube&#59; Neutron Flux Characterization&#59; Monte Carlo Simulation</td></tr>
+		<tr><td>The Effects of Neutron Radiation on the Electrical Properties of Si and SiC Schottky Power Diodes</td><td>2007</td><td>10.1063/1.2437461</td><td>Rabbit</td><td>Neutron irradiation&#59;  Silicon carbide Schottky diodes&#59;  Silicon Schottky diodes&#59;  Displacement damage&#59;  Radiation effects on semiconductors</td></tr>
+		<tr><td>Neutron Damage in SiC Semiconductor Radiation Detectors in the GT-MHR</td><td>2006</td><td>10.1520/jai13434</td><td>Beam Port 1</td><td>Silicon Carbide &#40;SiC&#41;&#59; Neutron Damage&#59; Semiconductor Radiation Detectors&#59; 1 MeV Equivalent Neutron Fluence&#59; MCNP</td></tr>
+		<tr><td>The effects of neutron radiation on the electrical performance parameters of silicon and silicon carbide schottky power diodes</td><td>2006</td><td>10.1063/1.2437461</td><td>Rabbit</td><td>Neutron radiation effects&#59;  Silicon carbide Schottky diodes&#59;  Silicon Schottky diodes&#59;  Radiation damage&#59;  Power diodes</td></tr>
+		<tr><td>Using Point Reactor Models and Genetic Algorithms for On-Line Global Xenon Estimation in Nuclear Reactors</td><td>2003</td><td>10.13182/NT03-A3414</td><td>Full Facility </td><td>Low&#45;Enriched Uranium &#40;LEU&#41;&#59;  LEU Conversion&#59;  Highly Enriched Uranium &#40;HEU&#41;&#59;  Reactor Core Design&#59;  Thermal&#45;Hydraulic Analysis </td></tr>
+		<tr><td>A comparison of neutron beams for BNCT based on in-phantom neutron field assessment parameters</td><td>2001</td><td>10.1118/1.1339878</td><td>Neutron Beam</td><td>Boron neutron capture therapy &#40;BNCT&#41;&#59;  Neutron beams&#59;  Accelerator&#45;based neutron sources&#59;  Monte Carlo N&#45;Particle &#40;MCNP&#41;&#59;  Neutron field assessment</td></tr>
+		<tr><td>Parametric Study of the Steady-State Operational Characteristics of the Ohio State University Natural Circulation, Indirect-Cycle, Inherently Safe Boiling Water Reactor</td><td>1995</td><td>10.13182/NT95-A35140</td><td>Full Facility </td><td>Boiling Water Reactor &#40;BWR&#41;&#59; Natural Circulation Reactor&#59; Inherently Safe Reactor&#59; Thermal&#45;Hydraulic Analysis&#59; Parametric Analysis</td></tr>
+		<tr><td>Low-Enriched Uranium Conversion&#47;Power Upgrade of The Ohio State University Research Reactor</td><td>1989</td><td>10.13182/NT89-A34293</td><td>Full Facility</td><td>Low&#45;Enriched Uranium &#40;LEU&#41;&#59; LEU Conversion&#59; Reactor Power Upgrade&#59; Reactor Core Design&#59; Thermal&#45;Hydraulic Analysis</td></tr>
+	</table>
+		</div>
+		<div class="row">&nbsp;</div>
+	</div>
+
+</body>
+</html>
