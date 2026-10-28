@@ -1,30 +1,13 @@
 <!doctype html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="author" content="Debra L.">
-	<title>Exercise3</title>
-	<link href="css/bootstrap.min.css" rel="stylesheet" >
+<meta charset="UTF-8">
+<title>Exercise 3 - Debra Lemak</title>
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet" >
 	<link href="css/grid.css" rel="stylesheet">
 	<link href="css/bootstrap-grid.css" rel="stylesheet">
 	<script src="js/bootstrap.bundle.min.js"></script>
-	
-	<!----  
-    One visual sketch of the planned application (using the tool of your choice)
-    3-5 separate functions that are used as part of the application (100 lines of JS code minimum + whatever HTML and CSS are needed). These functions can be separate global functions in the code or unique methods that you create as part of the class constructor.
-    Manipulation of the DOM using JavaScript methods to create new elements on the page: e.g. "createElement", "appendChild", etc.
-		- 
-    Manipulation of the DOM using JavaScript methods to manipulate or create new styles on the page e.g "variable.style" "variable.className", etc.
-		- hiding and showing results 
-    The use of at least one class, and two built-in JavaScript methods (Date, .toUpperCase, .split, etc.)
-		- how can I rework this to be a class with methods? search class? gets type of search from radio button and input from input or button then processes? 
-		-
-    The use of at least one control structure.
-		- if/else 
-
-	All scripts must return a value of some kind, and that value must be declared either as an alert on the page, text on the page, or in the console ---> 
-	
-	<!---https://www.w3schools.com/howto/howto_js_filter_table.asp ---> 
 	
 	<style> 
 		#myTable {
@@ -72,194 +55,74 @@
 
 	</style>
 	
-	
-	<script> 
-		
-	/////SEARCHING CONSTRUCTOR?//////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		///search by article name 
-		function myFunction() {
-			//Declare Variables 
-			let input, filter, table, tr, td, i, txtValue, resultCt; 
-			input = document.getElementById("myInput"); 
-			filter = input.value.toUpperCase();
-			table = document.getElementById("myTable");
-			tr = table.getElementsByTagName("tr");
-			resultCt = 0; 
-			
-			//Loop through all table rows and hide those who don't match the search query 
-			
-			for (i=0; i < tr.length; i++) {
-				td = tr[i].getElementsByTagName("td")[0];
-				if (td) {
-					txtValue = td.TextContent || td.innerText; 
-					//https://www.w3schools.com/jsref/jsref_indexof.asp 
-					if (txtValue.toUpperCase().indexOf(filter) > -1) {
-						tr[i].style.display = "";
-						resultCt++;
-					} else {
-						tr[i].style.display = "none";
-					}
-				}
-			}
-			console.log("You have " + resultCt + " results in your search.");
-			document.getElementById("results").innerText = "Your search has " + resultCt + " results.";
-		}
-		
-		//search in keywords 
-		function myKeywordSearch() {
-			//Declare Variables 
-			let kinput, kfilter, ktable, ktr, ktd, ki, ktxtValue, kresultCt; 
-			kinput = document.getElementById("myKeyword"); 
-			kfilter = kinput.value.toUpperCase();
-			ktable = document.getElementById("myTable");
-			ktr = ktable.getElementsByTagName("tr"); 
-			kresultCt = 0;
-			
-			//Loop through all table rows and hide those who don't match the search query 
-			
-			for (ki=0; ki < ktr.length; ki++) {
-				ktd = ktr[ki].getElementsByTagName("td")[4];
-				if (ktd) {
-					ktxtValue = ktd.TextContent || ktd.innerText; 
-					if (ktxtValue.toUpperCase().indexOf(kfilter) > -1) {
-						ktr[ki].style.display = "";
-						kresultCt++;
-					} else {
-						ktr[ki].style.display = "none";
-					}
-				}
-			}
-			console.log("You have " + kresultCt + " results in your search.");
-			document.getElementById("results").innerText = "Your search has " + kresultCt + " results.";
-		}
-		
-		function resetSearch() {
-			let rtable, rtr, rtd, ri; 
-			rtable = document.getElementById("myTable"); 
-			rtr = rtable.getElementsByTagName("tr");
-			
-			for (ri=0; ri < rtr.length; ri++) {
-				rtr[ri].style.display = "";
-			}
-			
-			document.getElementById("results").innerText = "";
-			document.getElementById("myInput").value = "";
-			document.getElementById("myKeyword").value = "";
-		}
-	
-		
-		//Facility search for clickable buttons 
-		function facilitySearch(finput) {
-			let ffilter, ftable, ftr, ftd, fi, ftxtValue, fresultCt;
-			//finput = "aif";
-			ffilter = finput.toUpperCase(); 
-			ftable = document.getElementById("myTable"); 
-			ftr = ftable.getElementsByTagName("tr"); 
-			console.log("Your facility search word is: " + finput);
-			console.log("Your facility search word in upper case is: " + ffilter);
-			fresultCt = 0; 
-			
-			for (fi=1; fi < ftr.length; fi++) {
-				ftd = ftr[fi].getElementsByTagName("td")[3];
-				if (ftd) {
-					ftxtValue = ftd.textContent || ftd.innerText; 
-					if (ftxtValue.toUpperCase().indexOf(ffilter) > -1) {
-						ftr[fi].style.display = "";
-						fresultCt++;
-					} else {
-						ftr[fi].style.display = "none";
-					}
-				}
-			}
-			console.log("You have " + fresultCt + " results in your search.");
-			document.getElementById("results").innerText = "Your search has " + fresultCt + " results.";
-		}
-
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-	 //convert DOI column into clickable links - https://doi.org/ 	
-	function convertDoiLinks() {
-		let doi, table3, tr3, doiCell; 
-		table3 = document.getElementById("myTable"); 
-		tr3 = table3.getElementsByTagName("tr"); 
-
-		//starts at 1 because first row only contains header items
-		for (i3 = 1; i3 < tr3.length; i3++) {
-			console.log("row# " + i3);
-			doiCell = tr3[i3].getElementsByTagName("td")[2];
-			doi = doiCell.textContent || doiCell.innerText;
-			console.log("This is the doi: " + doi);
-			doiCell.innerHTML = '<a href=https://doi.org/' + doi + '>' + doi + "</a>" ;		}
-		}
-
-	</script>
-	
+    
 </head>
 
 <body>
- <!---- Type of Search ---> 
- <!---- Text input or buttons ----> 
- <!--- Submit button ----> 
- <!---- Table of info ---> 
 
-	<div class="container"> 
+<div class="container"> 
 	<div class="row">&nbsp;</div>
+
+<!------ PAGE HEADER -----> 
 	<div class="row">
 		<div class="col-12 display-1 mainHeader"> <h1> <span id="smallerText">Published Research Utilizing the</span> <br> The Ohio State University Oklo Nuclear Reactor Laboratory </h1></div></div>
 	<div class="row">&nbsp;</div>
+	
+<!---- DOI BUTTON ----> 
 	<div class="row">
 		<div class="col-10">&nbsp;</div>
-		<div class="col-2"> <button type="button" class="btn btn-primary" onClick="convertDoiLinks()">Convert Links</button></div>
+		<div class="col-2"> <button type="button" class="btn btn-primary" id="btnConvertLinks">Convert Links</button></div>
 	</div>
 	<div class="row">&nbsp;</div>
+
+<!----- SEARCH BY ARTICLE NAME ----> 
 	<div class="row">
-		<input type="text" id="myInput" onKeyUp="myFunction()" placeholder="Search by article title..."> 
+		<input type="text" id="myInput"  placeholder="Search by article title..."> 
 	</div>
-	<div class="row"> 
-		<input type="text" id="myKeyword" onKeyUp="myKeywordSearch()" placeholder="Search by keyword..."> 
-	</div>
-	<div class="row">&nbsp;</div>	
+
+	<div class="row">&nbsp;</div>
+	
+<!----- FILTER BUTTONS -----> 
 	<div class="row">
 		<div class="col-1">
-		<button type="button" class="btn btn-secondary" onClick="facilitySearch('aif')" id="aifFilter">AIF</button>
+		<button type="button" class="btn btn-secondary" id="btnAifFilter">AIF</button>
 		</div>
 		<div class="col-1">
-		<button type="button" class="btn btn-secondary" onClick="facilitySearch('cif')" id="cifFilter">CIF</button>
+		<button type="button" class="btn btn-secondary" id="btnCifFilter">CIF</button>
 		</div>
 		<div class="col-1">
-		<button type="button" class="btn btn-secondary" onClick="facilitySearch('rabbit')" id="rabbitFilter">Rabbit</button>
+		<button type="button" class="btn btn-secondary" id="btnRabbitFilter">Rabbit</button>
 		</div>
 		<div class="col-1">
-		<button type="button" class="btn btn-secondary" onClick="facilitySearch('beam port 1')" id="bp1Filter">Beam Port 1</button>
+		<button type="button" class="btn btn-secondary" id="btnBp1Filter">Beam Port 1</button>
 		</div>
 		<div class="col-1">
-		<button type="button" class="btn btn-secondary" onClick="facilitySearch('beam port 2')" id="bp2Filter">Beam Port 2</button>
+		<button type="button" class="btn btn-secondary" id="btnBp2Filter">Beam Port 2</button>
 		</div>
 		<div class="col-1">
-		<button type="button" class="btn btn-secondary" onClick="facilitySearch('ndp')" id="ndpFilter">NDP</button>
+		<button type="button" class="btn btn-secondary" id="btnNdpFilter">NDP</button>
 		</div>
 		<div class="col-1">
-		<button type="button" class="btn btn-secondary" onClick="facilitySearch('Dry Tube')" id="dryTubeFilter">Dry Tube</button>
+		<button type="button" class="btn btn-secondary" id="btnDryTubeFilter">Dry Tube</button>
 		</div>
 		<div class="col-1">
-		<button type="button" class="btn btn-secondary" onClick="facilitySearch('co-60')" id="co60Filter">Co-60</button>
+		<button type="button" class="btn btn-secondary" id="btnCo60Filter">Co-60</button>
 		</div>
 		<div class="col-3">&nbsp;</div>
 		<div class="col-1"> 
-		<button type="button" class="btn btn-secondary" onClick="resetSearch()" id="resetBtn"> Reset Search</button>
+		<button type="button" class="btn btn-secondary" id="btnReset"> Reset Search</button>
 		</div>
 	</div>
+	
+<!----- SPACERS ----> 
 	<div class="row">&nbsp;</div>
 	<div class="row">&nbsp;</div>
+	
+<!----- MY TABLE -----> 
 	<div class="row">
 		<p id="results">&nbsp;  </p>
 	<table id="myTable">
+	<!----- TABLE HEADER ----> 
 		<tr class="header"> 
 			<th>Article</th>
 			<th>Year</th>
@@ -267,6 +130,7 @@
 			<th>Facility</th>
 			<th data>Keywords</th>		
 		</tr>
+	<!-----TABLE DATA -----> 
 		<tr><td>Neutron Irradiation and PIE of ZrC Coated Surrogate Particle Fuel in the IN-Pile Steady-state Extreme Temperature &#40;INSET&#41; Testbed &#40;&#35;4603&#41;</td><td>2026</td><td>10.2172/3452237</td><td>Dry Tube Facility</td><td>Neutron irradiation&#59;   ZrC coated surrogate particle fuel&#59;   Post&#45;irradiation examination &#40;PIE&#41;&#59;   INSET testbed&#59;   Advanced reactor fuels</td></tr>
 		<tr><td>Review of self-powered neutron detectors for reactor instrumentation</td><td>2025</td><td>10.2172/3374079</td><td>Gamma Facility</td><td>Self&#45;powered neutron detectors&#59;   Temperature effects&#59;   Gamma field&#59;   Neutron detection&#59;   Reactor instrumentation</td></tr>
 		<tr><td>Analysis of data from irradiation testing of printed strain gauges in prototypic nuclear environments</td><td>2025</td><td>10.2172/3019572</td><td>Rabbit</td><td>Printed strain gauges&#59;   Irradiation testing&#59;   Nuclear instrumentation&#59;   Radiation effects on sensors&#59;   Prototypic nuclear environments</td></tr>
@@ -280,7 +144,7 @@
 		<tr><td>Mechanically Robust and Flexible Scintillation Thin Films for Neutron Radiography and Multiplicity Counting</td><td>2024</td><td>10.1117/12.3021930</td><td>Beam Port 2</td><td></td></tr>
 		<tr><td>Response function for optical fiber based gamma thermometer in data analytic methodology for OFBGT array</td><td>2023</td><td>10.1016/j.pnucene.2023.104893</td><td>CIF</td><td>Optical Fiber Based Gamma Thermometer &#40;OFBGT&#41;&#59; Gamma Thermometer&#59; Response Function&#59; OFBGT Array&#59; Power Distribution</td></tr>
 		<tr><td>Feasibility and challenges of 22Na based radioactive tracer dilution for mass measurement of molten salts</td><td>2023</td><td>10.1007/s10967-022-08339-5</td><td>CIF </td><td>Molten salts&#59;  Radioactive tracer dilution&#59;  Sodium&#45;22 &#40;²²Na&#41;&#59;  Mass measurement&#59;  Radiotracers</td></tr>
-		<tr><td>Testing of fiber optic based sensors for advanced reactors in the Texas A&M University TRIGA reactor</td><td>2023</td><td>10.2139/ssrn.4510868</td><td>CIF </td><td>Optical Fiber Sensors&#59; Gamma Thermometer&#59; Advanced Reactors&#59; Reactor Instrumentation&#59; Sensor Testing</td></tr>
+		<tr><td>Testing of fiber optic based sensors for advanced reactors in the Texas A&amp;M University TRIGA reactor</td><td>2023</td><td>10.2139/ssrn.4510868</td><td>CIF </td><td>Optical Fiber Sensors&#59; Gamma Thermometer&#59; Advanced Reactors&#59; Reactor Instrumentation&#59; Sensor Testing</td></tr>
 		<tr><td>Characterizing a Research Reactor Based Fast Neutron Beam with Organic Scintillators</td><td>2023</td><td>10.1109/NSSMICRTSD49126.2023.10338751</td><td>Beam Port 1</td><td>Fast neutron beams&#59;  Research reactors&#59;  Organic scintillators&#59;  Fast neutron detection&#59;  Neutron beam characterization</td></tr>
 		<tr><td>Improved image stitching method for neutron imaging of large objects with small beam size</td><td>2023</td><td>10.1117/12.2677150</td><td>Beam Port 1, Beam Port 2</td><td>Image Stitching&#59; Neutron Imaging&#59; Neutron Radiography&#59; Computed Tomography &#40;CT&#41;&#59; Large Object Imaging</td></tr>
 		<tr><td>Development, feasibility, and uncertainty of radioactive .sup.22Na tracer dilution and gamma spectroscopy for mass determination of molten salt for pyroprocessing spent nuclear fuels.</td><td>2023</td><td>10.1007/s10967-023-08790-y</td><td>Full Facility</td><td></td></tr>
@@ -289,7 +153,7 @@
 		<tr><td>Silicon Solar Cells for Post-Detonation Monitoring and Gamma-Radiation Effects</td><td>2022</td><td>10.1080/00295639.2022.2091905</td><td>Cs-137, Co-60</td><td>Silicon solar cells&#59;  Post&#45;detonation monitoring&#59;  Gamma&#45;radiation effects&#59;  Radiation effects on semiconductors&#59;  Radiation tolerance</td></tr>
 		<tr><td>An automated fast neutron computed tomography instrument with on-line focusing for non-destructive evaluation</td><td>2022</td><td>10.1063/5.0091032</td><td>Beam Port 1</td><td>Fast Neutron Computed Tomography&#59; Fast Neutron Imaging&#59; Nondestructive Evaluation &#40;NDE&#41;&#59; Neutron Radiography&#59; Automated Imaging Systems</td></tr>
 		<tr><td>Quantifying spatial resolution in a fast neutron radiography system</td><td>2022</td><td>10.1016/j.nima.2022.166331</td><td>Beam Port 1</td><td>Fast neutron radiography&#59;  Fast neutron imaging&#59;  Spatial resolution&#59;  Modulation transfer function &#40;MTF&#41;&#59;  PVT scintillators</td></tr>
-		<tr><td>Lithium Chloride-Substituted Methylammonium Lead Tribromide Perovskites for Dual γ&#47Neutron Sensing</td><td>2022</td><td>10.1021/acsami.2c05024</td><td>Beam Port 2</td><td>Organic metal halide perovskites&#59;  Lithium&#45;doped perovskites&#59;  Dual gamma&#45;neutron sensing&#59;  Neutron detection&#59;  Gamma&#45;ray detection</td></tr>
+		<tr><td>Lithium Chloride-Substituted Methylammonium Lead Tribromide Perovskites for Dual γ&#47;Neutron Sensing</td><td>2022</td><td>10.1021/acsami.2c05024</td><td>Beam Port 2</td><td>Organic metal halide perovskites&#59;  Lithium&#45;doped perovskites&#59;  Dual gamma&#45;neutron sensing&#59;  Neutron detection&#59;  Gamma&#45;ray detection</td></tr>
 		<tr><td>Analytical Thermal Analysis of an Optical Fiber-Based Gamma-Ray Calorimeter With Non-Constant Fluid Temperatures on its Boundary</td><td>2022</td><td>10.1109/JSEN.2022.3154646</td><td>WIF</td><td>Gamma&#45;Ray Calorimeter&#59; Optical Fiber Sensor&#59; Fiber&#45;Optic Thermometry&#59; Analytical Thermal Model&#59; Reactor Instrumentation</td></tr>
 		<tr><td>Comparison of Measurements and MCNP Calculations for Response of an Optical Fiber-Based Gamma Thermometer in the Ohio State University Research Reactor</td><td>2022</td><td>10.13182/ICRSRPSD22-39419</td><td>WIF</td><td> Optical Fiber‑Based Gamma Thermometer &#40;OFBGT&#41;&#59;  MCNP Simulation&#59;  Linear Power Density&#59;  Axial Power Inference&#59;  Power Distribution Estimation</td></tr>
 		<tr><td>Steady-State In-Pile Nuclear Thermal Propulsion Experimental Testbed Initial Demonstration at The Ohio State University Research Reactor</td><td>2022</td><td>10.1080/00295450.2021.1879582</td><td>Full Facility</td><td>Nuclear thermal propulsion&#59;  In&#45;pile testing&#59;  Steady&#45;state operation&#59;  Subscale experiments&#59;  High&#45;temperature testing</td></tr>
@@ -336,5 +200,172 @@
 		<div class="row">&nbsp;</div>
 	</div>
 
+	
+<!------- MY JAVASCRIPT ------> 
+	<script> 
+		class filterListApp {
+			constructor() {
+				///info I'm capturing from the page to use later 
+				//myInput - text entered to search by article name 
+				this.myInput = document.getElementById("myInput"); 
+				
+				
+				//myTable - my data table 
+				this.myTable = document.getElementById("myTable"); 
+				
+				//All the rows in myTable 
+				this.mtRow = myTable.getElementsByTagName("tr");
+				
+				//results counter 
+				this.myResults = document.getElementById("results")
+								
+				//BUTTONS 
+				this.btnConvertLinks = document.getElementById("btnConvertLinks");
+				this.btnAifFilter = document.getElementById("btnAifFilter");
+				this.btnCifFilter = document.getElementById("btnCifFilter");
+				this.btnRabbitFilter = document.getElementById("btnRabbitFilter");
+				this.btnBp1Filter = document.getElementById("btnBp1Filter");
+				this.btnBp2Filter = document.getElementById("btnBp2Filter");
+				this.btnNdpFilter = document.getElementById("btnNdpFilter");
+				this.btnDryTubeFilter = document.getElementById("btnDryTubeFilter");
+				this.btnCo60Filter = document.getElementById("btnCo60Filter");
+				this.btnReset = document.getElementById("btnReset"); 
+				
+				const app = this; 
+				
+				//FILTER INPUT LISTENER 
+				this.myInput.addEventListener("keyup", function() {
+					app.articleFilter();
+				});
+				
+				//BUTTON LISTENERS
+				
+				this.btnConvertLinks.addEventListener("click", function() {
+					app.convertDoiLinks(); 
+				}); // end convert links button 
+				
+				this.btnReset.addEventListener("click", function() {
+					app.resetFilter();
+				}); //end reset filter button 
+				
+				
+				////////FACILITY BUTTON LISTENERS/////////// 
+				
+				this.btnAifFilter.addEventListener("click", function() {
+					app.facilitySearch('aif'); 
+				}); // end aif button 
+				this.btnCifFilter.addEventListener("click", function() {
+					app.facilitySearch('cif'); 
+				}); // end cif button 
+				this.btnRabbitFilter.addEventListener("click", function() {
+					app.facilitySearch('rabbit'); 
+				}); // end rabbit button 
+				this.btnBp1Filter.addEventListener("click", function() {
+					app.facilitySearch('beam port 1'); 
+				}); // end bp1 button 
+				this.btnBp2Filter.addEventListener("click", function() {
+					app.facilitySearch('beam port 2'); 
+				}); // end bp2 button 
+				this.btnNdpFilter.addEventListener("click", function() {
+					app.facilitySearch('ndp'); 
+				}); // end ndp button 
+				this.btnDryTubeFilter.addEventListener("click", function() {
+					app.facilitySearch('dry tube'); 
+				}); // end dry tube button 
+				this.btnCo60Filter.addEventListener("click", function() {
+					app.facilitySearch('co-60'); 
+				}); // end co-60 button 
+	
+			} // end of contructor 
+	
+			
+			//METHOD 1: CONVERTING DOI COLUMN INTO CLICKABLE LINKS 
+			convertDoiLinks() {
+				let doiText, doiCell; 
+		
+				//starts at 1 because first row only contains header items
+				for (let di = 1; di < this.mtRow.length; di++) {
+					console.log("row# " + di);
+					doiCell = this.mtRow[di].getElementsByTagName("td")[2]; //gets the third column in the table 
+					doiText = doiCell.textContent;
+					console.log("This is the doi: " + doiText);
+					doiCell.innerHTML = '<a href=https://doi.org/' + doiText + '>' + doiText + "</a>" ;		
+				} //ends for loop  
+			} //end convertDoiLinks method 
+			
+			
+			//METHOD 2: FILTERING THE TABLE BY ARTICLE NAME 
+			//https://www.w3schools.com/howto/howto_js_filter_table.asp 
+			articleFilter() {
+				let filter, arCell, arValue, resultCt; 
+				filter = this.myInput.value.toUpperCase();
+				resultCt = 0; 
+
+				//Loop through all table rows and hide those who don't match the search query 
+				for (let ai = 0; ai < this.mtRow.length; ai++) {
+					arCell = this.mtRow[ai].getElementsByTagName("td")[0];
+					if (arCell) {
+						arValue = arCell.TextContent || arCell.innerText; 
+						//https://www.w3schools.com/jsref/jsref_indexof.asp 
+						if (arValue.toUpperCase().indexOf(filter) > -1) {
+							this.mtRow[ai].style.display = "";
+							resultCt++;
+						} else {
+							this.mtRow[ai].style.display = "none";
+						}
+					}
+				}
+				console.log("You have " + resultCt + " results in your search.");
+				this.myResults.innerText = "Your search has " + resultCt + " results.";
+			} // end article filter method 
+			
+			
+			//METHOD 3: FILTERING THE TABLE BY FACILITY BUTTON 
+			facilitySearch(finput) {
+				let ffilter, ftd, ftxtValue, fresultCt;
+				//finput = "aif";
+				ffilter = finput.toUpperCase(); 
+				//this.myTable = ftable = document.getElementById("myTable"); 
+				//this.mtRow = ftr = ftable.getElementsByTagName("tr"); 
+				console.log("Your facility search word is: " + finput);
+				console.log("Your facility search word in upper case is: " + ffilter);
+				fresultCt = 0; 
+
+				for (let fi=1; fi < this.mtRow.length; fi++) {
+					ftd = this.mtRow[fi].getElementsByTagName("td")[3];
+					if (ftd) {
+						ftxtValue = ftd.textContent || ftd.innerText; 
+						if (ftxtValue.toUpperCase().indexOf(ffilter) > -1) {
+							this.mtRow[fi].style.display = "";
+							fresultCt++;
+						} else {
+							this.mtRow[fi].style.display = "none";
+						}
+					}
+				}
+				console.log("You have " + fresultCt + " results in your search.");
+				this.myResults.innerText = "Your search has " + fresultCt + " results.";
+			}
+			
+			
+			///METHOD 4: RESETTING THE TABLE 
+			resetFilter() {
+				for (let ri = 1; ri < this.mtRow.length; ri++) {
+					this.mtRow[ri].style.display = "";
+				}
+
+				this.myResults.innerText = "";
+				this.myInput.value = "";
+				
+			} //end filter reset method 
+			
+			//METHOD 5: CREATE SOME KIND OF ELEMENT?? 
+			
+		} //end of class 
+		
+	const filterApp = new filterListApp();
+	
+	</script>
+    
 </body>
 </html>
