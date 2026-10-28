@@ -10,24 +10,7 @@
 	<script src="js/bootstrap.bundle.min.js"></script>
 	
 	<style> 
-		#myTable {
-			border: 1px solid #ddd;
-		}
-
-		
-		table {
-			table-layout:fixed;
-			width:100%;
-		}
-		
-		#myTable tr {
-			border-bottom: 1px solid #ddd;
-		}
-		
-		#myTable tr.header, #myTable tr:hover {
-			background-color: #f1f1f1;
-		}
-		
+				
 		.mainHeader {
 		text-align: center;
 		padding: 50px;
@@ -44,10 +27,15 @@
 			border-radius: 0;
 		}
 		
+		.btn-primary:hover {
+			background-color: #70071c ;
+		}
+		
 		.btn-secondary {
 			width: 100%;
 			height: 100%;
 			border: #4a0513 ;
+			background-color: #70071c ;
 			border-radius: 0;
 			}
 		
@@ -77,14 +65,16 @@
 	</div>
 	<div class="row">&nbsp;</div>
 
-<!----- SEARCH BY ARTICLE NAME ----> 
+<!----- FILTER LIST BY ARTICLE NAME ----> 
+	<div class="row"><p>Filter list by article title </p></div>
 	<div class="row">
-		<input type="text" id="myInput"  placeholder="Search by article title..."> 
+		<input type="text" id="myInput"  placeholder="Enter search word or phrase to filter list below..."> 
 	</div>
 
 	<div class="row">&nbsp;</div>
 	
 <!----- FILTER BUTTONS -----> 
+	<div class="row"><p>--- or --- </p><p> Filter by facility used  </p></div>
 	<div class="row">
 		<div class="col-1">
 		<button type="button" class="btn btn-secondary" id="btnAifFilter">AIF</button>
@@ -112,7 +102,7 @@
 		</div>
 		<div class="col-3">&nbsp;</div>
 		<div class="col-1"> 
-		<button type="button" class="btn btn-secondary" id="btnReset"> Reset Search</button>
+		<button type="button" class="btn btn-secondary" id="btnReset"> Remove Table Filter</button>
 		</div>
 	</div>
 	
@@ -121,17 +111,18 @@
 	<div class="row">&nbsp;</div>
 	
 <!----- MY TABLE -----> 
+	<div class="row" id="tableMsg">
+	</div> 
 	<div class="row">
-		<p id="results">&nbsp;  </p>
-	<table id="myTable">
+	<table id="myTable" class="table table-hover table-bordered">
 	<!----- TABLE HEADER ----> 
-		<tr class="header"> 
+		<thead class="table-light"> 
 			<th>Article</th>
 			<th>Year</th>
 			<th>DOI</th>
 			<th>Facility</th>
 			<th data>Keywords</th>		
-		</tr>
+		</thead>
 	<!-----TABLE DATA -----> 
 		<tr><td>Neutron Irradiation and PIE of ZrC Coated Surrogate Particle Fuel in the IN-Pile Steady-state Extreme Temperature &#40;INSET&#41; Testbed &#40;&#35;4603&#41;</td><td>2026</td><td>10.2172/3452237</td><td>Dry Tube Facility</td><td>Neutron irradiation&#59;   ZrC coated surrogate particle fuel&#59;   Post&#45;irradiation examination &#40;PIE&#41;&#59;   INSET testbed&#59;   Advanced reactor fuels</td></tr>
 		<tr><td>Review of self-powered neutron detectors for reactor instrumentation</td><td>2025</td><td>10.2172/3374079</td><td>Gamma Facility</td><td>Self&#45;powered neutron detectors&#59;   Temperature effects&#59;   Gamma field&#59;   Neutron detection&#59;   Reactor instrumentation</td></tr>
@@ -218,8 +209,14 @@
 				//All the rows in myTable 
 				this.mtRow = myTable.getElementsByTagName("tr");
 				
+				//to be used for updates about what is going on with the table 
+				this.tblMsg = document.getElementById("tableMsg"); 
+		
 				//results counter 
-				this.myResults = document.getElementById("results")
+				
+				this.myResults = document.createElement("p");
+				
+				
 								
 				//BUTTONS 
 				this.btnConvertLinks = document.getElementById("btnConvertLinks");
@@ -302,7 +299,8 @@
 				let filter, arCell, arValue, resultCt; 
 				filter = this.myInput.value.toUpperCase();
 				resultCt = 0; 
-
+				//remove table message 
+				this.tblMsg.innerText = "";
 				//Loop through all table rows and hide those who don't match the search query 
 				for (let ai = 0; ai < this.mtRow.length; ai++) {
 					arCell = this.mtRow[ai].getElementsByTagName("td")[0];
@@ -318,7 +316,12 @@
 					}
 				}
 				console.log("You have " + resultCt + " results in your search.");
-				this.myResults.innerText = "Your search has " + resultCt + " results.";
+				
+				//add a paragraph into the tableMsg div with your result information 
+				const myMsg = document.createElement("p");
+				myMsg.textContent = "Your search has " + resultCt + " results." ;
+				this.tblMsg.appendChild(myMsg);
+				
 			} // end article filter method 
 			
 			
@@ -332,6 +335,8 @@
 				console.log("Your facility search word is: " + finput);
 				console.log("Your facility search word in upper case is: " + ffilter);
 				fresultCt = 0; 
+				
+				this.tblMsg.innerText = "";
 
 				for (let fi=1; fi < this.mtRow.length; fi++) {
 					ftd = this.mtRow[fi].getElementsByTagName("td")[3];
@@ -345,9 +350,16 @@
 						}
 					}
 				}
+				
+				//show that result count is incrementing correctly 
 				console.log("You have " + fresultCt + " results in your search.");
-				this.myResults.innerText = "Your search has " + fresultCt + " results.";
-			}
+				
+				//add a paragraph into the tableMsg div with your result information 
+				const myMsg = document.createElement("p");
+				myMsg.textContent = "Your search has " + fresultCt + " results." ;
+				this.tblMsg.appendChild(myMsg);
+				
+			} //end of facility search method
 			
 			
 			///METHOD 4: RESETTING THE TABLE 
@@ -356,12 +368,11 @@
 					this.mtRow[ri].style.display = "";
 				}
 
-				this.myResults.innerText = "";
+				this.tblMsg.innerText = "";
 				this.myInput.value = "";
 				
 			} //end filter reset method 
 			
-			//METHOD 5: CREATE SOME KIND OF ELEMENT?? 
 			
 		} //end of class 
 		
